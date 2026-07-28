@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borano Llana</title>
+<meta name="description" content="Borano Llana, PhD candidate in Computer Science. Minimalist concept theme.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#141414;
+    --muted:#6b6b6b;
+    --faint:#9a9a9a;
+    --rule:#e6e6e6;
+    --accent:#141414;
+    --maxw:720px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:76px}
+  body{
+    background:var(--bg);color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;
+    font-feature-settings:"liga" 1,"calt" 1;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+  /* link style */
+  .link{border-bottom:1px solid var(--rule);transition:border-color .2s}
+  .link:hover{border-color:var(--ink)}
+
+  /* nav */
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+  .nav{display:flex;align-items:baseline;justify-content:space-between;height:60px}
+  .nav .name{font-weight:600;letter-spacing:-0.01em}
+  .nav nav{display:flex;gap:22px}
+  .nav nav a{font-size:.88rem;color:var(--muted);transition:color .2s}
+  .nav nav a:hover{color:var(--ink)}
+  @media(max-width:620px){.nav nav{display:none}}
+
+  /* section rhythm */
+  section{padding:56px 0}
+  section + section{border-top:1px solid var(--rule)}
+  .label{font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:26px}
+
+  /* hero */
+  .hero{padding-top:76px;padding-bottom:64px}
+  .hero h1{font-size:clamp(2rem,5vw,2.7rem);font-weight:600;letter-spacing:-0.02em;line-height:1.12;margin-bottom:18px}
+  .hero .role{color:var(--muted);font-size:1.02rem;margin-bottom:26px}
+  .hero p{color:var(--ink);margin-bottom:14px}
+  .hero .dim{color:var(--muted);font-size:.98rem;margin-bottom:30px}
+  .hero .actions{display:flex;gap:24px;font-size:.94rem}
+
+  /* generic list rows */
+  .row{padding:20px 0;border-top:1px solid var(--rule)}
+  .row:first-of-type{border-top:0;padding-top:0}
+  .row h3{font-size:1.02rem;font-weight:600;letter-spacing:-0.005em;margin-bottom:3px}
+  .row .meta{font-size:.85rem;color:var(--faint);margin-bottom:7px}
+  .row p{color:var(--muted);font-size:.95rem}
+
+  /* research: definition style */
+  .def{display:grid;grid-template-columns:1fr;gap:0}
+
+  /* publications */
+  .filters{display:flex;gap:18px;margin-bottom:26px;font-size:.85rem}
+  .filters button{background:none;border:none;cursor:pointer;color:var(--faint);padding:0;font:inherit;font-size:.85rem;transition:color .2s;border-bottom:1px solid transparent;padding-bottom:2px}
+  .filters button:hover{color:var(--muted)}
+  .filters button.active{color:var(--ink);border-color:var(--ink)}
+  .pub{padding:18px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:92px 1fr;gap:20px}
+  .pub:first-child{border-top:0;padding-top:0}
+  .pub .vn{font-size:.85rem;color:var(--muted);font-variant-numeric:tabular-nums;padding-top:1px}
+  .pub .vn .yr{color:var(--faint)}
+  .pub h3{font-size:1rem;font-weight:500;line-height:1.45}
+  .pub .tg{font-size:.82rem;color:var(--faint);margin-top:6px}
+  .pub .flag{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:6px}
+  @media(max-width:520px){.pub{grid-template-columns:1fr;gap:5px}}
+
+  /* projects */
+  .proj-row{padding:20px 0;border-top:1px solid var(--rule);display:block}
+  .proj-row:first-of-type{border-top:0;padding-top:0}
+  .proj-row .ph{display:flex;align-items:baseline;gap:12px}
+  .proj-row h3{font-size:1.05rem;font-weight:600}
+  a.proj-row:hover h3{border-bottom:1px solid var(--ink)}
+  .proj-row .tag{font-size:.76rem;color:var(--faint)}
+  .proj-row p{color:var(--muted);font-size:.95rem;margin-top:4px}
+  .proj-row .st{font-size:.82rem;color:var(--faint);margin-top:7px}
+
+  /* skills */
+  .skill{padding:16px 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:150px 1fr;gap:20px}
+  .skill:first-of-type{border-top:0;padding-top:0}
+  .skill .k{font-size:.85rem;color:var(--muted)}
+  .skill .v{font-size:.94rem}
+  @media(max-width:520px){.skill{grid-template-columns:1fr;gap:3px}}
+
+  /* education */
+  .edu{padding:16px 0;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+  .edu:first-of-type{border-top:0;padding-top:0}
+  .edu .d{font-weight:500}
+  .edu .s{color:var(--muted);font-size:.9rem}
+  .edu .y{color:var(--faint);font-size:.85rem;white-space:nowrap}
+
+  /* contact */
+  .contact h2{font-size:1.5rem;font-weight:600;letter-spacing:-0.01em;margin-bottom:12px}
+  .contact p{color:var(--muted);margin-bottom:20px}
+  .contact .actions{display:flex;gap:22px;flex-wrap:wrap;font-size:.94rem}
+
+  footer{border-top:1px solid var(--rule);padding:30px 0;color:var(--faint);font-size:.84rem}
+
+  .reveal{opacity:0;transform:translateY(12px);transition:opacity .5s ease, transform .5s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  .switcher{position:fixed;right:18px;bottom:18px;font-size:.82rem;color:var(--muted);
+    background:var(--bg);border:1px solid var(--rule);padding:8px 14px;border-radius:6px}
+  .switcher:hover{color:var(--ink);border-color:var(--ink)}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="name">Borano Llana</a>
+    <nav>
+      <a href="#research">Research</a>
+      <a href="#pubs">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#xp">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<a id="top"></a>
+
+<div class="wrap">
+
+  <section class="hero">
+    <h1>Borano Llana</h1>
+    <div class="role">PhD Candidate, Computer Science · University of Rhode Island</div>
+    <p>I study how people read, and build the tools that make it easier.</p>
+    <p class="dim">Human-computer interaction researcher and full-stack engineer working at the intersection of typography, accessibility, and applied AI. I use eye-tracking and pupillometry to understand reading across cognitively and linguistically diverse populations, then ship the software that makes that research possible.</p>
+    <div class="actions">
+      <a href="#pubs" class="link">Publications</a>
+      <a href="mailto:borano.llana@uri.edu" class="link">borano.llana@uri.edu</a>
+    </div>
+  </section>
+
+  <section id="research">
+    <div class="label">Research</div>
+    <div class="def">
+      <div class="row"><h3>End-to-End Machine Learning</h3><p>Everything from data cleaning and preprocessing to building models from scratch and delivering predictions, with a focus on interpretable deep learning you can actually explain.</p></div>
+      <div class="row"><h3>Eye-Tracking &amp; Pupillometry</h3><p>Measuring visual attention and cognitive load during reading, including browser-based, webcam remote studies.</p></div>
+      <div class="row"><h3>Typography &amp; Readability</h3><p>How font attributes like size, weight, and spacing affect reading speed, comprehension, and perceived effort.</p></div>
+      <div class="row"><h3>Inclusive &amp; Accessible Design</h3><p>Designing for readers with ADHD, dyslexia, and English-as-a-second-language backgrounds across age groups.</p></div>
+      <div class="row"><h3>Human-Centered AI</h3><p>Using AI to generate reading primes, summarize documents, and personalize typography at scale.</p></div>
+    </div>
+  </section>
+
+  <section id="pubs">
+    <div class="label">Publications</div>
+    <div class="filters">
+      <button class="active" data-f="all">All</button>
+      <button data-f="pub">Published / Accepted</button>
+      <button data-f="review">Under Review</button>
+    </div>
+    <div class="pub-list">
+      <div class="pub" data-c="pub"><div class="vn">CHI <span class="yr">2026</span></div><div><h3>Reading with Diversity in Mind: Pupillometry and Typography Towards Inclusive Design for ADHD Readers</h3><div class="tg">Pupillometry, ADHD, Inclusive Design</div></div></div>
+      <div class="pub" data-c="pub"><div class="vn">CHI <span class="yr">2026</span></div><div><h3>REARS: An Interface for Browser-Based Eye-Tracking in Remote Readability Studies</h3><div class="tg">Eye-Tracking, Remote Studies, Tooling</div></div></div>
+      <div class="pub" data-c="pub"><div class="vn">CHI <span class="yr">2026</span></div><div><h3>Different Font Attributes Influence English Readers' Perception of Font Size Across Age Groups</h3><div class="tg">Typography, Font Size, Aging</div></div></div>
+      <div class="pub" data-c="pub"><div class="vn">CHI <span class="yr">2026</span></div><div><h3>One Reader, Two Reading Profiles: Language-Dependent Dyslexia and Reading Behaviors in English-Spanish Readers</h3><div class="tg">Dyslexia, Bilingual Reading</div></div></div>
+      <div class="pub" data-c="pub"><div class="vn">UMAP <span class="yr">2026</span></div><div><h3>Personalizing Font Size Normalization: Linguistic Background Shapes Which Font Attributes Matter</h3><div class="tg">Personalization, Typography</div></div></div>
+      <div class="pub" data-c="pub"><div class="vn">VSS <span class="yr">2025</span></div><div><h3>Typography and Pupillometry: Exploring Reading Trade-Offs Across Diverse Cognitive and Linguistic Profiles</h3><div class="tg">Pupillometry, Cognitive Load</div></div></div>
+      <div class="pub" data-c="pub"><div class="vn">CHI <span class="yr">2025</span></div><div><h3>Priming at Scale: An Evaluation of Using AI to Generate Primes for Mobile Readers</h3><div class="tg">Applied AI, Mobile Reading, Priming</div></div></div>
+      <div class="pub" data-c="review"><div class="vn"><span class="yr">2026</span></div><div><h3>METaD: A Human-Centric Framework to Describe Maintaining Evolving Tabular Datasets</h3><div class="flag">Under review</div><div class="tg">Data Practices, Frameworks</div></div></div>
+      <div class="pub" data-c="review"><div class="vn"><span class="yr">2026</span></div><div><h3>ESL and Non-ESL Readers Across Cognitive Styles Read AI-Summarized Voter Pamphlets Slower</h3><div class="flag">Under review</div><div class="tg">ESL, AI Summarization, Civic Tech</div></div></div>
+      <div class="pub" data-c="review"><div class="vn"><span class="yr">2026</span></div><div><h3>Breaking Word Barriers: What Makes Digital Reading Harder for Readers with and without Dyslexia</h3><div class="flag">Under review</div><div class="tg">Dyslexia, Digital Reading</div></div></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="label">Projects</div>
+    <a class="proj-row" href="https://votelayout.app" target="_blank" rel="noopener">
+      <div class="ph"><h3>Votelayout</h3><span class="tag">Live · votelayout.app</span></div>
+      <p>An online voting-space layout designer for election officials, with automated ADA compliance checks and AI-assisted path planning for accessible voter flow. Built and deployed end-to-end.</p>
+      <div class="st">Svelte, TypeScript, Rust</div>
+    </a>
+    <div class="proj-row">
+      <div class="ph"><h3>REARS</h3></div>
+      <p>A browser-based interface for webcam eye-tracking and pupillometry, purpose-built to run readability studies remotely with no lab hardware required.</p>
+      <div class="st">Eye-Tracking, Web</div>
+    </div>
+    <div class="proj-row">
+      <div class="ph"><h3>ReadGEN</h3></div>
+      <p>A personalized text-to-image conversion tool that lets researchers render reading stimuli with precise, controllable typography for their own experiments.</p>
+      <div class="st">Typography, Python</div>
+    </div>
+  </section>
+
+  <section id="xp">
+    <div class="label">Experience</div>
+    <div class="row"><h3>Graduate Administrative Assistant</h3><div class="meta">Institute for AI and Computational Research (IACR), URI · Jan 2026 to Present</div><p>Leading research projects and training sessions; preparing documentation, workshops, and video tutorials; migrating research computing workflows via the MGHPCC; liaison between researchers and IT Research Computing.</p></div>
+    <div class="row"><h3>Graduate Research Assistant, Voting Layout Designer</h3><div class="meta">University of Rhode Island · Jan 2025 to Dec 2025</div><p>Co-designed, developed, and deployed votelayout.app with automated ADA compliance and AI-assisted path planning. Led full-stack development in Svelte, TypeScript, and Rust, and mentored developers.</p></div>
+    <div class="row"><h3>Course Instructor, CSC412: Operating Systems &amp; Networks</h3><div class="meta">University of Rhode Island · Jan 2025 to May 2025</div><p>Delivered lectures and hands-on labs, developed course materials, and provided feedback. Average evaluation 4.17/5 (77% response rate).</p></div>
+    <div class="row"><h3>Graduate Teaching Assistant</h3><div class="meta">University of Rhode Island · Sep 2022 to Dec 2025</div><p>TA for 8 courses spanning introductory to advanced theory and systems. Built assignments and grading keys, engineered automated grading systems, and ran weekly labs and office hours.</p></div>
+    <div class="row"><h3>Full-Stack Developer</h3><div class="meta">Ritech International AG, Esme Learning · Jul 2021 to May 2022</div><p>Built reusable, fast-loading landing page templates, deployed an RDS SQL Server database on AWS with a Python API, and led an SEO initiative that increased search reach by 15%.</p></div>
+  </section>
+
+  <section id="skills">
+    <div class="label">Skills</div>
+    <div class="skill"><div class="k">Languages</div><div class="v">Python, TypeScript, JavaScript, Svelte, Rust, C++, C, Go, Java, Bash, Asteroid</div></div>
+    <div class="skill"><div class="k">Data &amp; ML</div><div class="v">PyTorch, Scikit-learn, NumPy, Pandas, Matplotlib</div></div>
+    <div class="skill"><div class="k">Web &amp; Infrastructure</div><div class="v">React.js, Node.js, HTML, CSS / SASS / SCSS, Liquid, SQL, MongoDB, AWS, LaTeX</div></div>
+    <div class="skill"><div class="k">Spoken</div><div class="v">Albanian (native), English (fluent)</div></div>
+  </section>
+
+  <section id="education">
+    <div class="label">Education</div>
+    <div class="edu"><div><div class="d">PhD, Computer Science</div><div class="s">University of Rhode Island</div></div><div class="y">Expected May 2027</div></div>
+    <div class="edu"><div><div class="d">MS, Computer Science</div><div class="s">University of Rhode Island</div></div><div class="y">May 2025</div></div>
+    <div class="edu"><div><div class="d">BA, Computer Science</div><div class="s">American University in Bulgaria · Software Engineering</div></div><div class="y">May 2021</div></div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="label">Contact</div>
+    <h2>Let's talk</h2>
+    <p>Open to research collaborations, PhD-level opportunities, and engineering conversations.</p>
+    <div class="actions">
+      <a href="mailto:borano.llana@uri.edu" class="link">borano.llana@uri.edu</a>
+      <a href="https://www.linkedin.com/in/boranollana/" target="_blank" rel="noopener" class="link">LinkedIn</a>
+      <a href="https://scholar.google.com/citations?user=yTtXA48AAAAJ&hl=en" target="_blank" rel="noopener" class="link">Google Scholar</a>
+    </div>
+  </section>
+
+  <footer>
+    <div>Borano Llana · PhD Candidate, Computer Science · University of Rhode Island</div>
+    <div style="margin-top:5px">© <span id="yr"></span> · Minimalist concept theme</div>
+  </footer>
+
+</div>
+
+<a href="index.html" class="switcher">← back to main</a>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  const btns=document.querySelectorAll('.filters button'),pubs=document.querySelectorAll('.pub[data-c]');
+  btns.forEach(b=>b.addEventListener('click',()=>{btns.forEach(x=>x.classList.remove('active'));b.classList.add('active');
+    const f=b.dataset.f;pubs.forEach(p=>p.style.display=(f==='all'||p.dataset.c===f)?'grid':'none');}));
+</script>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borano Llana // RETRO</title>
+<meta name="description" content="Borano Llana, PhD candidate in Computer Science. Retro/synthwave concept theme.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Press+Start+2P&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d0221;
+    --bg-2:#190a33;
+    --panel:rgba(23,10,46,0.66);
+    --pink:#ff2e97;
+    --cyan:#05d9e8;
+    --purple:#b967ff;
+    --yellow:#ffd319;
+    --orange:#ff901f;
+    --text:#f3e9ff;
+    --muted:#b49fd8;
+    --faint:#7d6aa8;
+    --maxw:1080px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;scroll-padding-top:90px}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Space Mono',monospace;
+    line-height:1.7;font-size:15.5px;
+    overflow-x:hidden;position:relative;min-height:100vh;
+  }
+  /* vertical gradient sky */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-3;
+    background:linear-gradient(180deg,#050014 0%,#1a0038 40%,#3b0a52 70%,#7d1a5a 100%);
+  }
+  /* moving perspective grid floor */
+  .floor{position:fixed;left:0;right:0;bottom:0;height:38vh;z-index:-2;overflow:hidden;pointer-events:none}
+  .floor::before{
+    content:"";position:absolute;left:-25%;right:-25%;top:-10%;bottom:-60%;
+    background-image:
+      linear-gradient(rgba(5,217,232,.55) 2px, transparent 2px),
+      linear-gradient(90deg, rgba(255,46,151,.45) 2px, transparent 2px);
+    background-size:48px 48px;
+    transform:perspective(340px) rotateX(74deg);
+    transform-origin:50% 100%;
+    animation:floor 4.5s linear infinite;
+  }
+  @keyframes floor{from{background-position:0 0}to{background-position:0 48px}}
+  .floor::after{ /* horizon glow */
+    content:"";position:absolute;left:0;right:0;top:0;height:2px;
+    background:var(--cyan);box-shadow:0 0 24px 6px var(--cyan),0 0 60px 12px rgba(255,46,151,.6);
+  }
+  /* scanlines + vignette overlay */
+  .scan{position:fixed;inset:0;z-index:60;pointer-events:none;
+    background:repeating-linear-gradient(rgba(0,0,0,0.16) 0 1px, transparent 1px 3px);
+    mix-blend-mode:multiply;opacity:.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{padding:80px 0;position:relative}
+
+  h1,h2,h3{font-family:'Orbitron',sans-serif;letter-spacing:.02em;line-height:1.15}
+  .neon-cy{color:var(--cyan);text-shadow:0 0 6px var(--cyan),0 0 18px rgba(5,217,232,.6)}
+  .neon-pk{color:var(--pink);text-shadow:0 0 6px var(--pink),0 0 18px rgba(255,46,151,.6)}
+
+  /* ---- NAV ---- */
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(6px);
+    background:linear-gradient(180deg,rgba(13,2,33,.9),rgba(13,2,33,.35));
+    border-bottom:1px solid rgba(5,217,232,.35)}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+  .brand{font-family:'Press Start 2P';font-size:.82rem;color:var(--pink);
+    text-shadow:0 0 8px rgba(255,46,151,.8);animation:flicker 4s infinite}
+  @keyframes flicker{0%,19%,21%,80%,100%{opacity:1}20%,82%{opacity:.72}}
+  .nav-links{display:flex;gap:22px}
+  .nav-links a{font-size:.82rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);
+    transition:.2s;position:relative;padding:4px 0}
+  .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-3px;height:2px;background:var(--cyan);transition:right .25s;box-shadow:0 0 8px var(--cyan)}
+  .nav-links a:hover{color:var(--cyan);text-shadow:0 0 8px var(--cyan)}
+  .nav-links a:hover::after{right:0}
+  .nav-burger{display:none;background:none;border:none;color:var(--cyan);cursor:pointer}
+  .nav-burger svg{width:26px;height:26px}
+
+  /* ---- HERO ---- */
+  .hero{text-align:center;padding-top:54px;padding-bottom:30px}
+  .sun{width:230px;height:230px;border-radius:50%;margin:0 auto 6px;position:relative;overflow:hidden;
+    background:linear-gradient(#fff27a,var(--yellow) 30%,var(--orange) 55%,var(--pink) 85%);
+    box-shadow:0 0 60px rgba(255,46,151,.55),0 0 120px rgba(255,144,31,.35)}
+  .sun::after{content:"";position:absolute;left:0;right:0;bottom:0;height:52%;
+    background:repeating-linear-gradient(var(--bg) 0 4px, transparent 4px 15px)}
+  .eyebrow{display:inline-block;font-family:'Press Start 2P';font-size:.6rem;color:var(--cyan);
+    letter-spacing:.1em;margin:14px 0 18px;text-shadow:0 0 8px rgba(5,217,232,.7)}
+  .hero h1{font-size:clamp(2.1rem,6vw,3.9rem);font-weight:900;text-transform:uppercase;
+    background:linear-gradient(180deg,#fff,#ffd7f4 40%,var(--pink));-webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 10px rgba(255,46,151,.5));margin-bottom:20px}
+  .type-line{font-size:1.05rem;color:var(--cyan);min-height:1.6em;margin-bottom:18px;font-weight:700}
+  .type-line .cursor{display:inline-block;width:9px;background:var(--cyan);margin-left:2px;animation:blink 1s steps(1) infinite;box-shadow:0 0 8px var(--cyan)}
+  @keyframes blink{50%{opacity:0}}
+  .hero p.lede{max-width:620px;margin:0 auto 30px;color:var(--muted)}
+  .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+  .btn{font-family:'Orbitron';font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem;
+    padding:13px 26px;border-radius:4px;cursor:pointer;transition:.2s;border:2px solid;display:inline-flex;gap:9px;align-items:center}
+  .btn-pk{border-color:var(--pink);color:var(--pink);background:rgba(255,46,151,.08);box-shadow:0 0 14px rgba(255,46,151,.35),inset 0 0 12px rgba(255,46,151,.15)}
+  .btn-pk:hover{background:var(--pink);color:#fff;box-shadow:0 0 24px rgba(255,46,151,.8)}
+  .btn-cy{border-color:var(--cyan);color:var(--cyan);background:rgba(5,217,232,.08);box-shadow:0 0 14px rgba(5,217,232,.3),inset 0 0 12px rgba(5,217,232,.12)}
+  .btn-cy:hover{background:var(--cyan);color:#04141a;box-shadow:0 0 24px rgba(5,217,232,.8)}
+
+  /* ---- SECTION HEADS ---- */
+  .sec-head{margin-bottom:40px}
+  .sec-tag{font-family:'Press Start 2P';font-size:.58rem;color:var(--purple);letter-spacing:.1em;text-shadow:0 0 8px rgba(185,103,255,.6)}
+  .sec-head h2{font-size:clamp(1.6rem,4vw,2.4rem);font-weight:700;text-transform:uppercase;margin-top:12px;
+    color:#fff;text-shadow:0 0 10px rgba(5,217,232,.4)}
+  .sec-head p{color:var(--muted);margin-top:12px;max-width:640px}
+
+  /* ---- CARDS ---- */
+  .panel{background:var(--panel);border:1px solid rgba(185,103,255,.4);border-radius:8px;padding:24px;
+    backdrop-filter:blur(3px);transition:.22s;position:relative}
+  .panel:hover{transform:translateY(-4px);border-color:var(--cyan);box-shadow:0 0 24px rgba(5,217,232,.35)}
+
+  .grid{display:grid;gap:18px}
+  .interests{grid-template-columns:repeat(3,1fr)}
+  .interest .ico{font-family:'Press Start 2P';font-size:.9rem;color:var(--cyan);margin-bottom:14px;text-shadow:0 0 8px var(--cyan)}
+  .interest.feat{grid-column:span 2;border-color:rgba(255,46,151,.5)}
+  .interest h3{font-size:1.02rem;color:#fff;margin-bottom:7px}
+  .interest.feat h3{font-size:1.2rem;color:var(--pink);text-shadow:0 0 8px rgba(255,46,151,.5)}
+  .interest p{color:var(--muted);font-size:.92rem}
+
+  /* publications */
+  .filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+  .chip{font-family:'Orbitron';font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;padding:8px 16px;border-radius:3px;
+    border:1px solid rgba(185,103,255,.5);background:transparent;color:var(--muted);cursor:pointer;transition:.2s}
+  .chip:hover{color:var(--cyan);border-color:var(--cyan)}
+  .chip.active{background:var(--purple);color:#fff;border-color:var(--purple);box-shadow:0 0 14px rgba(185,103,255,.6)}
+  .pub-list{display:flex;flex-direction:column;gap:14px}
+  .pub{display:flex;gap:18px;align-items:flex-start}
+  .venue{flex-shrink:0;min-width:82px;text-align:center;padding:10px 8px;border-radius:5px;
+    border:1px solid rgba(5,217,232,.5);background:rgba(5,217,232,.06)}
+  .venue .vn{font-family:'Orbitron';font-weight:900;color:var(--cyan);font-size:1rem;text-shadow:0 0 8px rgba(5,217,232,.5)}
+  .venue .vy{font-size:.72rem;color:var(--faint)}
+  .pub h3{font-family:'Space Mono';font-weight:700;font-size:1rem;color:#fff;line-height:1.4}
+  .pub .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .tags span{font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px}
+  .review-flag{display:inline-block;font-family:'Orbitron';font-size:.64rem;text-transform:uppercase;letter-spacing:.08em;
+    color:var(--yellow);border:1px solid var(--yellow);padding:2px 8px;border-radius:3px;margin-bottom:7px;box-shadow:0 0 10px rgba(255,211,25,.3)}
+
+  /* projects */
+  .projects{grid-template-columns:repeat(3,1fr)}
+  .proj{display:flex;flex-direction:column}
+  .proj .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .proj h3{font-size:1.15rem;color:var(--cyan)}
+  a.proj:hover h3{text-shadow:0 0 10px var(--cyan)}
+  .live{font-family:'Orbitron';font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--pink);
+    display:inline-flex;align-items:center;gap:6px}
+  .live .dot{width:7px;height:7px;border-radius:50%;background:var(--pink);box-shadow:0 0 8px var(--pink);animation:blink 1.4s infinite}
+  .proj p{color:var(--muted);font-size:.9rem;flex-grow:1}
+  .stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .proj-go{margin-top:14px;font-family:'Orbitron';font-size:.72rem;text-transform:uppercase;color:var(--pink);letter-spacing:.06em}
+
+  /* timeline */
+  .timeline{position:relative;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:7px;top:6px;bottom:6px;width:2px;
+    background:linear-gradient(var(--pink),var(--cyan));box-shadow:0 0 10px rgba(5,217,232,.5)}
+  .tl{position:relative;padding-bottom:30px}
+  .tl:last-child{padding-bottom:0}
+  .tl::before{content:"";position:absolute;left:-29px;top:5px;width:14px;height:14px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--cyan);box-shadow:0 0 10px var(--cyan)}
+  .tl .role{font-family:'Orbitron';font-weight:700;color:#fff;font-size:1rem}
+  .tl .org{color:var(--cyan);font-size:.86rem}
+  .tl .when{color:var(--faint);font-size:.78rem;margin:2px 0 7px}
+  .tl p{color:var(--muted);font-size:.9rem}
+
+  /* skills + edu */
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .skill h3{font-size:.95rem;color:var(--pink);margin-bottom:12px;text-transform:uppercase;letter-spacing:.05em}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips span{font-size:.8rem;color:var(--text);border:1px solid rgba(5,217,232,.4);background:rgba(5,217,232,.05);padding:5px 12px;border-radius:3px;transition:.2s}
+  .chips span:hover{border-color:var(--pink);color:var(--pink);box-shadow:0 0 10px rgba(255,46,151,.3)}
+  .edu-grid{grid-template-columns:repeat(3,1fr);margin-top:22px}
+  .edu .deg{font-family:'Orbitron';font-weight:700;color:#fff;font-size:1rem}
+  .edu .sch{color:var(--cyan);font-size:.85rem;margin:4px 0}
+  .edu .yr{color:var(--faint);font-size:.8rem}
+
+  /* contact */
+  .contact{text-align:center}
+  .contact .panel{max-width:620px;margin:0 auto;padding:44px 30px;border-color:rgba(255,46,151,.5)}
+  .contact h2{font-size:clamp(1.8rem,4vw,2.6rem);text-transform:uppercase;color:#fff;margin-bottom:12px;text-shadow:0 0 12px rgba(255,46,151,.5)}
+  .contact p{color:var(--muted);margin-bottom:26px}
+  .socials{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
+  .socials a{font-family:'Orbitron';font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--cyan);
+    border:1px solid var(--cyan);padding:10px 16px;border-radius:3px;transition:.2s}
+  .socials a:hover{background:var(--cyan);color:#04141a;box-shadow:0 0 18px var(--cyan)}
+
+  footer{text-align:center;padding:34px 0;border-top:1px solid rgba(185,103,255,.3);color:var(--faint);font-size:.8rem}
+  footer .brand{font-size:.6rem;display:inline-block;margin-bottom:10px}
+
+  .reveal{opacity:0;transform:translateY(22px);transition:.6s}
+  .reveal.in{opacity:1;transform:none}
+
+  .switcher{position:fixed;right:16px;bottom:16px;z-index:70;font-family:'Orbitron';font-size:.66rem;text-transform:uppercase;
+    letter-spacing:.06em;color:var(--yellow);border:1px solid var(--yellow);background:rgba(13,2,33,.8);
+    padding:9px 14px;border-radius:4px;box-shadow:0 0 14px rgba(255,211,25,.35)}
+  .switcher:hover{background:var(--yellow);color:#1a0038}
+
+  @media(max-width:860px){
+    .interests,.projects,.edu-grid{grid-template-columns:1fr}
+    .interest.feat{grid-column:span 1}
+    .skills{grid-template-columns:1fr}
+    .nav-links{position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;
+      background:rgba(13,2,33,.97);border-bottom:1px solid var(--cyan);padding:8px 24px;display:none}
+    .nav-links.open{display:flex}
+    .nav-links a{padding:12px 0}
+    .nav-burger{display:block}
+    .pub{flex-direction:column;gap:10px}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="floor"></div>
+<div class="scan"></div>
+
+<header>
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand">BL//</a>
+    <button class="nav-burger" id="burger" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    <nav class="nav-links" id="links">
+      <a href="#research">Research</a>
+      <a href="#pubs">Publications</a>
+      <a href="#projects">Projects</a>
+      <a href="#xp">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+<a id="top"></a>
+
+<section class="hero">
+  <div class="wrap">
+    <div class="sun"></div>
+    <div class="eyebrow">PhD Candidate // Univ. of Rhode Island</div>
+    <h1>Borano Llana</h1>
+    <div class="type-line"><span id="typed"></span><span class="cursor">&nbsp;</span></div>
+    <p class="lede">Human-computer interaction researcher and full-stack engineer working at the intersection of typography, accessibility, and applied AI. I study how people read, and build the tools that make it easier.</p>
+    <div class="cta-row">
+      <a href="#pubs" class="btn btn-pk">Publications</a>
+      <a href="mailto:borano.llana@uri.edu" class="btn btn-cy">Contact</a>
+    </div>
+  </div>
+</section>
+
+<section id="research">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-tag">01 // Research</span><h2>What I Work On</h2>
+      <p>How typography and interface design shape reading for people with different cognitive and linguistic profiles, and how AI can help personalize it.</p></div>
+    <div class="grid interests">
+      <div class="panel interest feat reveal"><div class="ico">[ML]</div><h3>End-to-End Machine Learning</h3><p>Everything from data cleaning and preprocessing to building models from scratch and delivering predictions, with a focus on interpretable deep learning you can actually explain.</p></div>
+      <div class="panel interest reveal"><div class="ico">[EYE]</div><h3>Eye-Tracking &amp; Pupillometry</h3><p>Measuring visual attention and cognitive load during reading, including browser-based, webcam remote studies.</p></div>
+      <div class="panel interest reveal"><div class="ico">[TYPE]</div><h3>Typography &amp; Readability</h3><p>How font attributes like size, weight, and spacing affect reading speed, comprehension, and perceived effort.</p></div>
+      <div class="panel interest reveal"><div class="ico">[A11Y]</div><h3>Inclusive &amp; Accessible Design</h3><p>Designing for readers with ADHD, dyslexia, and English-as-a-second-language backgrounds across age groups.</p></div>
+      <div class="panel interest reveal"><div class="ico">[AI]</div><h3>Human-Centered AI</h3><p>Using AI to generate reading primes, summarize documents, and personalize typography at scale.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="pubs">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-tag">02 // Publications</span><h2>Selected Work</h2>
+      <p>Peer-reviewed publications and manuscripts under review.</p></div>
+    <div class="filters reveal">
+      <button class="chip active" data-f="all">All</button>
+      <button class="chip" data-f="pub">Published / Accepted</button>
+      <button class="chip" data-f="review">Under Review</button>
+    </div>
+    <div class="pub-list">
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">CHI</div><div class="vy">2026</div></div><div><h3>Reading with Diversity in Mind: Pupillometry and Typography Towards Inclusive Design for ADHD Readers</h3><div class="tags"><span>Pupillometry</span><span>ADHD</span><span>Inclusive Design</span></div></div></div>
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">CHI</div><div class="vy">2026</div></div><div><h3>REARS: An Interface for Browser-Based Eye-Tracking in Remote Readability Studies</h3><div class="tags"><span>Eye-Tracking</span><span>Remote Studies</span><span>Tooling</span></div></div></div>
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">CHI</div><div class="vy">2026</div></div><div><h3>Different Font Attributes Influence English Readers' Perception of Font Size Across Age Groups</h3><div class="tags"><span>Typography</span><span>Font Size</span><span>Aging</span></div></div></div>
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">CHI</div><div class="vy">2026</div></div><div><h3>One Reader, Two Reading Profiles: Language-Dependent Dyslexia and Reading Behaviors in English-Spanish Readers</h3><div class="tags"><span>Dyslexia</span><span>Bilingual Reading</span></div></div></div>
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">UMAP</div><div class="vy">2026</div></div><div><h3>Personalizing Font Size Normalization: Linguistic Background Shapes Which Font Attributes Matter</h3><div class="tags"><span>Personalization</span><span>Typography</span></div></div></div>
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">VSS</div><div class="vy">2025</div></div><div><h3>Typography and Pupillometry: Exploring Reading Trade-Offs Across Diverse Cognitive and Linguistic Profiles</h3><div class="tags"><span>Pupillometry</span><span>Cognitive Load</span></div></div></div>
+      <div class="panel pub reveal" data-c="pub"><div class="venue"><div class="vn">CHI</div><div class="vy">2025</div></div><div><h3>Priming at Scale: An Evaluation of Using AI to Generate Primes for Mobile Readers</h3><div class="tags"><span>Applied AI</span><span>Mobile Reading</span><span>Priming</span></div></div></div>
+      <div class="panel pub reveal" data-c="review"><div class="venue"><div class="vn">•••</div><div class="vy">2026</div></div><div><span class="review-flag">Under Review</span><h3>METaD: A Human-Centric Framework to Describe Maintaining Evolving Tabular Datasets</h3><div class="tags"><span>Data Practices</span><span>Frameworks</span></div></div></div>
+      <div class="panel pub reveal" data-c="review"><div class="venue"><div class="vn">•••</div><div class="vy">2026</div></div><div><span class="review-flag">Under Review</span><h3>ESL and Non-ESL Readers Across Cognitive Styles Read AI-Summarized Voter Pamphlets Slower</h3><div class="tags"><span>ESL</span><span>AI Summarization</span><span>Civic Tech</span></div></div></div>
+      <div class="panel pub reveal" data-c="review"><div class="venue"><div class="vn">•••</div><div class="vy">2026</div></div><div><span class="review-flag">Under Review</span><h3>Breaking Word Barriers: What Makes Digital Reading Harder for Readers with and without Dyslexia</h3><div class="tags"><span>Dyslexia</span><span>Digital Reading</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-tag">03 // Projects</span><h2>Tools I've Built</h2></div>
+    <div class="grid projects">
+      <a class="panel proj reveal" href="https://votelayout.app" target="_blank" rel="noopener"><div class="top"><h3>Votelayout</h3><span class="live"><span class="dot"></span>Live</span></div><p>An online voting-space layout designer for election officials, with automated ADA compliance checks and AI-assisted path planning for accessible voter flow. Built and deployed end-to-end.</p><div class="stack"><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">Svelte</span><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">TypeScript</span><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">Rust</span></div><div class="proj-go">Visit votelayout.app →</div></a>
+      <div class="panel proj reveal"><div class="top"><h3>REARS</h3></div><p>A browser-based interface for webcam eye-tracking and pupillometry, purpose-built to run readability studies remotely with no lab hardware required.</p><div class="stack"><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">Eye-Tracking</span><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">Web</span></div></div>
+      <div class="panel proj reveal"><div class="top"><h3>ReadGEN</h3></div><p>A personalized text-to-image conversion tool that lets researchers render reading stimuli with precise, controllable typography for their own experiments.</p><div class="stack"><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">Typography</span><span style="font-size:.7rem;color:var(--muted);border:1px solid rgba(185,103,255,.35);padding:2px 9px;border-radius:3px">Python</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="xp">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-tag">04 // Experience</span><h2>Where I've Worked</h2></div>
+    <div class="timeline">
+      <div class="tl reveal"><div class="role">Graduate Administrative Assistant</div><div class="org">Institute for AI and Computational Research (IACR), URI</div><div class="when">Jan 2026 to Present</div><p>Leading research projects and training sessions; preparing documentation, workshops, and video tutorials; migrating research computing workflows via the MGHPCC; liaison between researchers and IT Research Computing.</p></div>
+      <div class="tl reveal"><div class="role">Graduate Research Assistant, Voting Layout Designer</div><div class="org">University of Rhode Island</div><div class="when">Jan 2025 to Dec 2025</div><p>Co-designed, developed, and deployed votelayout.app with automated ADA compliance and AI-assisted path planning. Led full-stack development in Svelte, TypeScript, and Rust, and mentored developers.</p></div>
+      <div class="tl reveal"><div class="role">Course Instructor, CSC412: Operating Systems &amp; Networks</div><div class="org">University of Rhode Island</div><div class="when">Jan 2025 to May 2025</div><p>Delivered lectures and hands-on labs, developed course materials, and provided feedback. Average evaluation 4.17/5 (77% response rate).</p></div>
+      <div class="tl reveal"><div class="role">Graduate Teaching Assistant</div><div class="org">University of Rhode Island</div><div class="when">Sep 2022 to Dec 2025</div><p>TA for 8 courses spanning introductory to advanced theory and systems. Built assignments and grading keys, engineered automated grading systems, and ran weekly labs and office hours.</p></div>
+      <div class="tl reveal"><div class="role">Full-Stack Developer</div><div class="org">Ritech International AG, Esme Learning</div><div class="when">Jul 2021 to May 2022</div><p>Built reusable, fast-loading landing page templates, deployed an RDS SQL Server database on AWS with a Python API, and led an SEO initiative that increased search reach by 15%.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal"><span class="sec-tag">05 // Skills</span><h2>Toolbox</h2></div>
+    <div class="grid skills">
+      <div class="panel skill reveal"><h3>Languages</h3><div class="chips"><span>Python</span><span>TypeScript</span><span>JavaScript</span><span>Svelte</span><span>Rust</span><span>C++</span><span>C</span><span>Go</span><span>Java</span><span>Bash</span><span>Asteroid</span></div></div>
+      <div class="panel skill reveal"><h3>Data &amp; ML</h3><div class="chips"><span>PyTorch</span><span>Scikit-learn</span><span>NumPy</span><span>Pandas</span><span>Matplotlib</span></div></div>
+      <div class="panel skill reveal"><h3>Web &amp; Infra</h3><div class="chips"><span>React.js</span><span>Node.js</span><span>HTML</span><span>CSS / SCSS</span><span>Liquid</span><span>SQL</span><span>MongoDB</span><span>AWS</span><span>LaTeX</span></div></div>
+      <div class="panel skill reveal"><h3>Spoken</h3><div class="chips"><span>Albanian (native)</span><span>English (fluent)</span></div></div>
+    </div>
+    <div class="sec-head reveal" style="margin-top:56px;margin-bottom:0"><span class="sec-tag">06 // Education</span><h2>Academic Background</h2></div>
+    <div class="grid edu-grid">
+      <div class="panel edu reveal"><div class="deg">PhD, Computer Science</div><div class="sch">University of Rhode Island</div><div class="yr">Expected May 2027</div></div>
+      <div class="panel edu reveal"><div class="deg">MS, Computer Science</div><div class="sch">University of Rhode Island</div><div class="yr">May 2025</div></div>
+      <div class="panel edu reveal"><div class="deg">BA, Computer Science</div><div class="sch">American University in Bulgaria</div><div class="yr">May 2021</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="panel reveal">
+      <span class="sec-tag">07 // Contact</span>
+      <h2>Let's Talk</h2>
+      <p>Open to research collaborations, PhD-level opportunities, and engineering conversations.</p>
+      <a href="mailto:borano.llana@uri.edu" class="btn btn-pk">borano.llana@uri.edu</a>
+      <div class="socials">
+        <a href="https://www.linkedin.com/in/boranollana/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://scholar.google.com/citations?user=yTtXA48AAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+        <a href="mailto:borano.llana@uri.edu">Email</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><div class="brand" style="font-family:'Press Start 2P';color:var(--pink)">BL//</div>
+  <div>Borano Llana // PhD Candidate, Computer Science // University of Rhode Island</div>
+  <div style="margin-top:6px">© <span id="yr"></span> // Retro concept theme</div></div>
+</footer>
+
+<a href="index.html" class="switcher">← back to main</a>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+  // mobile menu
+  const burger=document.getElementById('burger'),links=document.getElementById('links');
+  burger.addEventListener('click',()=>links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>links.classList.remove('open')));
+  // typewriter
+  const phrases=['> studying how people read...','> building tools for readability...','> eye-tracking &amp; pupillometry...','> interpretable machine learning...'];
+  const out=document.getElementById('typed');let pi=0,ci=0,del=false;
+  function tw(){const p=phrases[pi];out.innerHTML=p.substring(0,ci);
+    if(!del&&ci<p.length){ci++;setTimeout(tw,55);}
+    else if(!del&&ci===p.length){del=true;setTimeout(tw,1400);}
+    else if(del&&ci>0){ci--;setTimeout(tw,25);}
+    else{del=false;pi=(pi+1)%phrases.length;setTimeout(tw,300);}}
+  tw();
+  // reveal
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+  // filter
+  const chips=document.querySelectorAll('.chip'),pubs=document.querySelectorAll('.pub[data-c]');
+  chips.forEach(b=>b.addEventListener('click',()=>{chips.forEach(x=>x.classList.remove('active'));b.classList.add('active');
+    const f=b.dataset.f;pubs.forEach(p=>p.style.display=(f==='all'||p.dataset.c===f)?'flex':'none');}));
+</script>
+</body>
+</html>
