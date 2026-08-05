@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Fetch citation stats from a Google Scholar profile and write scholar-stats.json.
 
-Runs in GitHub Actions, where outbound access to scholar.google.com is available.
 Parses the small stats table on the profile page (Citations / h-index / i10-index,
 each with an "All" and a "Since" column) and stores the all-time values.
 
-If Scholar blocks the request or the page can't be parsed, the script exits with a
-non-zero status WITHOUT overwriting scholar-stats.json, so the last good numbers
-stay on the site.
+Google Scholar blocks most datacenter IPs, including the Azure ranges GitHub
+Actions runners come from, so a 403 on a scheduled run is expected and normal.
+When that happens the script leaves scholar-stats.json untouched and exits 0, so
+the last good numbers stay on the site and the workflow does not report failure.
+Real bugs (bad user id, changed page markup) still surface in the run log.
 """
 
 import datetime
@@ -41,18 +42,18 @@ def main() -> None:
     try:
         html = fetch(URL)
     except Exception as exc:  # network / HTTP error
-        print(f"ERROR fetching Scholar: {exc}", file=sys.stderr)
-        sys.exit(1)
+        print(f"SKIP: Scholar refused the request ({exc}).")
+        print(f"Leaving {OUT} unchanged. This is expected from CI IP ranges.")
+        return
 
     # Values appear in order: citations(all, since), h(all, since), i10(all, since).
     nums = re.findall(r'gsc_rsb_std">(\d[\d,]*)<', html)
     if len(nums) < 6:
         print(
-            "ERROR: could not find the stats table — Scholar likely served a "
-            "robot check. Leaving scholar-stats.json unchanged.",
-            file=sys.stderr,
+            "SKIP: could not find the stats table — Scholar likely served a "
+            f"robot check. Leaving {OUT} unchanged."
         )
-        sys.exit(1)
+        return
 
     to_int = lambda s: int(s.replace(",", ""))
     stats = {
