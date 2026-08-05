@@ -10,314 +10,15 @@
 <meta property="og:title" content="Borano Llana | CS PhD Researcher">
 <meta property="og:description" content="HCI researcher & full-stack engineer working on readability, typography, accessibility, and eye-tracking.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://borillana.github.io/">
+<meta property="og:image" content="https://borillana.github.io/headshot.webp">
+<link rel="canonical" href="https://borillana.github.io/">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  /* ---------- THEME TOKENS ---------- */
-  :root, html[data-theme="dark"]{
-    --bg:#0a0c12;
-    --bg-2:#0f121b;
-    --surface:#141826;
-    --surface-2:#1a1f30;
-    --border:#252b3d;
-    --text:#e8eaf0;
-    --muted:#9aa3b8;
-    --faint:#6b7387;
-    --accent:#7c5cff;
-    --accent-2:#22d3ee;
-    --accent-soft:rgba(124,92,255,0.12);
-    --nav-bg:rgba(10,12,18,0.72);
-    --amber-text:#fbbf24;
-    --amber-bg:rgba(251,191,36,.1);
-    --amber-border:rgba(251,191,36,.25);
-    --radius:16px;
-    --maxw:1080px;
-    --shadow:0 10px 40px -12px rgba(0,0,0,0.6);
-  }
-  html[data-theme="light"]{
-    --bg:#f7f8fb;
-    --bg-2:#eef1f6;
-    --surface:#ffffff;
-    --surface-2:#f2f4f9;
-    --border:#e2e6ee;
-    --text:#171a24;
-    --muted:#525c72;
-    --faint:#8a92a6;
-    --accent:#6a4bff;
-    --accent-2:#0e8fa8;
-    --accent-soft:rgba(106,75,255,0.10);
-    --nav-bg:rgba(247,248,251,0.80);
-    --amber-text:#b45309;
-    --amber-bg:rgba(180,83,9,.09);
-    --amber-border:rgba(180,83,9,.22);
-    --shadow:0 10px 34px -14px rgba(23,26,36,0.18);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth;scroll-padding-top:90px}
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-    line-height:1.65;
-    font-size:16px;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-    transition:background .3s ease, color .3s ease;
-  }
-  a{color:inherit;text-decoration:none}
-  h1,h2,h3,h4{font-family:'Space Grotesk',sans-serif;line-height:1.15;font-weight:600;letter-spacing:-0.01em}
-  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
-  section{padding:88px 0;position:relative}
-  .accent{color:var(--accent-2)}
-  .grad-text{
-    background:linear-gradient(120deg,var(--accent),var(--accent-2));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-  }
-
-  /* ---------- NAV ---------- */
-  header.nav{
-    position:sticky;top:0;z-index:50;
-    backdrop-filter:blur(14px);
-    background:var(--nav-bg);
-    border-bottom:1px solid transparent;
-    transition:border-color .3s, background .3s;
-  }
-  header.nav.scrolled{border-bottom:1px solid var(--border)}
-  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:66px}
-  .brand{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;letter-spacing:-0.02em}
-  .brand .dot{color:var(--accent)}
-  .nav-links{display:flex;gap:6px;align-items:center}
-  .nav-links a{
-    color:var(--muted);font-size:0.92rem;font-weight:500;
-    padding:8px 14px;border-radius:10px;transition:color .2s,background .2s;
-  }
-  .nav-links a:hover{color:var(--text);background:var(--surface)}
-  .nav-cluster{display:flex;align-items:center;gap:10px}
-  .nav-toggle{display:none;background:none;border:none;color:var(--text);cursor:pointer;padding:8px}
-  .nav-toggle svg{width:26px;height:26px}
-  .theme-toggle{
-    display:flex;align-items:center;justify-content:center;
-    width:40px;height:40px;border-radius:11px;
-    background:var(--surface);border:1px solid var(--border);color:var(--muted);
-    cursor:pointer;transition:all .2s;flex-shrink:0;
-  }
-  .theme-toggle:hover{color:var(--text);border-color:var(--accent);transform:translateY(-2px)}
-  .theme-toggle svg{width:19px;height:19px}
-  .theme-toggle .icon-moon{display:none}
-  html[data-theme="light"] .theme-toggle .icon-sun{display:none}
-  html[data-theme="light"] .theme-toggle .icon-moon{display:block}
-  /* ---------- HERO ---------- */
-  .hero{padding-top:70px;padding-bottom:70px}
-  .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:56px;align-items:center}
-  .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;
-    color:var(--accent-2);font-weight:500;font-size:0.85rem;letter-spacing:0.02em;
-    background:var(--accent-soft);border:1px solid var(--border);
-    padding:6px 14px;border-radius:999px;margin-bottom:22px;
-  }
-  .eyebrow .pulse{width:7px;height:7px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 0 0 rgba(34,211,238,.6);animation:pulse 2.4s infinite}
-  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.5)}70%{box-shadow:0 0 0 8px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
-  .hero h1{font-size:clamp(2.4rem,5.5vw,3.7rem);margin-bottom:18px}
-  .hero .lede{font-size:1.12rem;color:var(--muted);max-width:560px;margin-bottom:14px}
-  .hero .sub{color:var(--faint);font-size:0.98rem;margin-bottom:30px;max-width:540px}
-  .cta-row{display:flex;flex-wrap:wrap;gap:12px}
-  .btn{
-    display:inline-flex;align-items:center;gap:9px;
-    font-weight:600;font-size:0.94rem;padding:12px 22px;border-radius:12px;
-    transition:transform .18s ease, box-shadow .18s ease, background .2s;
-    border:1px solid var(--border);cursor:pointer;
-  }
-  .btn svg{width:17px;height:17px}
-  .btn-primary{background:linear-gradient(120deg,var(--accent),#6a4bff);border-color:transparent;color:#fff;box-shadow:0 8px 24px -8px rgba(124,92,255,.7)}
-  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 30px -8px rgba(124,92,255,.8)}
-  .btn-ghost{background:var(--surface);color:var(--text)}
-  .btn-ghost:hover{background:var(--surface-2);transform:translateY(-2px)}
-
-  /* photo */
-  .photo-wrap{display:flex;justify-content:center}
-  .photo{
-    position:relative;width:290px;height:290px;border-radius:26px;
-    background:
-      linear-gradient(145deg,var(--surface-2),var(--surface));
-    border:1px solid var(--border);
-    display:flex;align-items:center;justify-content:center;flex-direction:column;
-    overflow:hidden;box-shadow:var(--shadow);
-  }
-  .photo::after{content:"";position:absolute;inset:0;border-radius:26px;padding:1px;
-    background:linear-gradient(145deg,rgba(124,92,255,.6),transparent 40%,rgba(34,211,238,.5));
-    -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-    -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
-  .photo img{width:100%;height:100%;object-fit:cover;display:none}
-  .photo.has-img img{display:block}
-  .photo.has-img .ph-inner{display:none}
-  .ph-inner{text-align:center;color:var(--faint);padding:20px}
-  .ph-inner .initials{font-family:'Space Grotesk';font-size:3.6rem;font-weight:700;
-    background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .ph-inner .hint{font-size:0.78rem;margin-top:8px;color:var(--faint)}
-
-  /* ---------- SECTION HEADINGS ---------- */
-  .sec-head{margin-bottom:44px}
-  .sec-tag{color:var(--accent);font-family:'Space Grotesk';font-weight:600;font-size:0.85rem;letter-spacing:0.08em;text-transform:uppercase;display:block;margin-bottom:10px}
-  .sec-head h2{font-size:clamp(1.7rem,3.5vw,2.3rem)}
-  .sec-head p{color:var(--muted);margin-top:12px;max-width:840px}
-
-  /* ---------- CARDS / GRID ---------- */
-  .card{
-    background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
-    padding:26px;transition:transform .2s ease, border-color .2s, box-shadow .2s;
-  }
-  .card:hover{transform:translateY(-4px);border-color:#39406090;box-shadow:var(--shadow)}
-
-  /* research interests */
-  /* 5 cards: 3-col grid, first card featured across 2 cols -> both rows fill evenly */
-  .interests{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-  .interest .ico{width:42px;height:42px;border-radius:11px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:14px;border:1px solid var(--border);flex-shrink:0}
-  .interest .ico svg{width:22px;height:22px;stroke:var(--accent-2)}
-  .interest h3{font-size:1.05rem;margin-bottom:6px}
-  .interest p{color:var(--muted);font-size:0.92rem}
-  .interest.featured{grid-column:span 2;display:flex;flex-direction:row;align-items:center;gap:22px;
-    background:linear-gradient(140deg,var(--accent-soft),var(--surface) 70%)}
-  .interest.featured .ico{margin-bottom:0;width:52px;height:52px}
-  .interest.featured .ico svg{width:27px;height:27px}
-  .interest.featured h3{font-size:1.2rem}
-  .interest.featured p{font-size:0.96rem}
-  @media(max-width:860px){
-    .interests{grid-template-columns:repeat(2,1fr)}
-    .interest.featured{grid-column:span 2}
-  }
-  @media(max-width:560px){
-    .interests{grid-template-columns:1fr}
-    .interest.featured{grid-column:span 1;flex-direction:column;align-items:flex-start;gap:0}
-    .interest.featured .ico{margin-bottom:14px}
-  }
-
-  /* publications */
-  .filter-bar{display:flex;flex-direction:column;gap:14px;margin-bottom:30px;
-    background:var(--bg-2);border:1px solid var(--border);border-radius:14px;padding:18px 20px}
-  .filter-group{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-  .filter-group + .filter-group{padding-top:14px;border-top:1px solid var(--border)}
-  .filter-label{font-size:0.7rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;
-    color:var(--faint);width:64px;flex-shrink:0}
-  .chip-btn{background:var(--surface);border:1px solid var(--border);color:var(--muted);font-size:0.85rem;font-weight:500;padding:7px 15px;border-radius:999px;cursor:pointer;transition:all .18s}
-  .chip-btn:hover{color:var(--text);border-color:var(--accent)}
-  .chip-btn.active{background:var(--accent-soft);border-color:var(--accent);color:var(--text)}
-  /* google scholar stats */
-  .scholar-stats{display:flex;flex-wrap:wrap;align-items:stretch;gap:14px;margin-bottom:30px}
-  .scholar-stats .stat{display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-width:108px;padding:16px 22px;border-radius:14px;background:var(--surface);border:1px solid var(--border);
-    transition:transform .2s ease, border-color .2s}
-  .scholar-stats a.stat:hover{transform:translateY(-3px);border-color:var(--accent)}
-  .stat-num{font-family:'Space Grotesk';font-weight:700;font-size:1.8rem;line-height:1;
-    background:linear-gradient(120deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
-  .stat-label{font-size:0.78rem;color:var(--muted);margin-top:7px;letter-spacing:0.02em}
-  .stat-updated{flex-basis:100%;font-size:0.76rem;color:var(--faint);display:flex;align-items:center;gap:6px}
-  .stat-updated .live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent-2)}
-  .pub-list{display:flex;flex-direction:column;gap:14px}
-  .pub{display:flex;gap:20px;align-items:flex-start;padding:22px 24px}
-  .venue{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-width:78px;padding:12px 10px;border-radius:12px;background:var(--surface-2);border:1px solid var(--border)}
-  .venue .v-name{font-family:'Space Grotesk';font-weight:700;font-size:1.05rem;color:var(--accent-2)}
-  .venue .v-year{font-size:0.78rem;color:var(--faint);margin-top:2px}
-  .pub-body h3{font-size:1.06rem;line-height:1.4;margin-bottom:6px;font-family:'Inter';font-weight:600;letter-spacing:0}
-  .pub-body .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-  .tag{font-size:0.74rem;color:var(--muted);background:var(--bg-2);border:1px solid var(--border);padding:3px 10px;border-radius:6px}
-  .status-pill{font-size:0.72rem;font-weight:600;padding:3px 10px;border-radius:6px;display:inline-block}
-  .status-review{color:var(--amber-text);background:var(--amber-bg);border:1px solid var(--amber-border)}
-
-  /* projects */
-  .proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
-  .proj{display:flex;flex-direction:column}
-  .proj .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .proj h3{font-size:1.2rem}
-  .proj .live{font-size:0.78rem;color:var(--accent-2);display:inline-flex;align-items:center;gap:5px;font-weight:500}
-  .proj p{color:var(--muted);font-size:0.94rem;flex-grow:1}
-  .proj .stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
-  .proj-link{margin-top:16px;font-size:0.88rem;color:var(--accent-2);font-weight:600;display:inline-flex;align-items:center;gap:6px}
-  .proj-link svg{width:14px;height:14px;transition:transform .18s}
-  .proj:hover .proj-link svg{transform:translate(3px,-3px)}
-
-  /* timeline */
-  .timeline{position:relative;padding-left:34px}
-  .timeline::before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:2px;background:linear-gradient(var(--accent),transparent)}
-  .tl-item{position:relative;padding-bottom:34px}
-  .tl-item:last-child{padding-bottom:0}
-  .tl-item::before{content:"";position:absolute;left:-33px;top:5px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:3px solid var(--accent)}
-  .tl-item .role{font-family:'Space Grotesk';font-weight:600;font-size:1.08rem}
-  .tl-item .org{color:var(--accent-2);font-size:0.92rem;font-weight:500}
-  .tl-item .when{color:var(--faint);font-size:0.82rem;margin:3px 0 8px;font-variant-numeric:tabular-nums}
-  .tl-item p{color:var(--muted);font-size:0.93rem}
-
-  /* skills */
-  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-  .skill-cat h3{font-size:1rem;margin-bottom:14px;color:var(--text)}
-  .skill-cat h3 span{color:var(--faint);font-weight:400;font-size:0.85rem}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chips span{font-size:0.85rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);padding:6px 13px;border-radius:8px;transition:all .18s}
-  .chips span:hover{color:var(--text);border-color:var(--accent);transform:translateY(-2px)}
-
-  /* education */
-  .edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin-top:26px}
-  .edu .deg{font-family:'Space Grotesk';font-weight:600;font-size:1.05rem}
-  .edu .sch{color:var(--accent-2);font-size:0.9rem;margin:4px 0}
-  .edu .yr{color:var(--faint);font-size:0.82rem}
-
-  /* contact */
-  .contact{text-align:center}
-  .contact-card{max-width:640px;margin:0 auto;padding:48px 34px;text-align:center;
-    background:linear-gradient(160deg,var(--surface),var(--bg-2));border:1px solid var(--border);border-radius:24px}
-  .contact-card h2{font-size:clamp(1.8rem,4vw,2.4rem);margin-bottom:14px}
-  .contact-card p{color:var(--muted);margin-bottom:28px}
-  .social-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-  .social{width:48px;height:48px;border-radius:12px;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:all .2s}
-  .social:hover{transform:translateY(-3px);border-color:var(--accent);background:var(--surface-2)}
-  .social svg{width:22px;height:22px;fill:var(--muted);transition:fill .2s}
-  .social:hover svg{fill:var(--accent-2)}
-
-  footer{border-top:1px solid var(--border);padding:34px 0;text-align:center;color:var(--faint);font-size:0.86rem}
-  footer .brand{font-size:0.95rem;margin-bottom:8px;display:inline-block;color:var(--muted)}
-
-  /* reveal animation */
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease, transform .6s ease}
-  .reveal.in{opacity:1;transform:none}
-
-  /* ---------- RESPONSIVE ---------- */
-  @media(max-width:840px){
-    .hero-grid{grid-template-columns:1fr;gap:36px;text-align:center}
-    .hero .lede,.hero .sub{margin-left:auto;margin-right:auto}
-    .cta-row{justify-content:center}
-    .eyebrow{margin-left:auto;margin-right:auto}
-    .photo-wrap{order:-1}
-    .nav-links{
-      position:absolute;top:66px;left:0;right:0;flex-direction:column;align-items:stretch;
-      background:var(--bg-2);border-bottom:1px solid var(--border);padding:10px 16px;gap:2px;
-      display:none;
-    }
-    .nav-links.open{display:flex}
-    .nav-links a{padding:12px 14px}
-    .nav-toggle{display:block}
-    section{padding:66px 0}
-    .filter-label{width:100%}
-    .pub{flex-direction:column;gap:14px}
-    .venue{flex-direction:row;gap:8px;min-width:0;align-self:flex-start;padding:6px 14px}
-    .venue .v-year{margin-top:0}
-  }
-  @media(prefers-reduced-motion:reduce){
-    *{animation:none!important}
-    .reveal{opacity:1;transform:none;transition:none}
-    html{scroll-behavior:auto}
-  }
-</style>
-<script>
-  // Set theme before first paint to avoid a flash of the wrong theme.
-  (function(){
-    var t;
-    try{ t = localStorage.getItem('theme'); }catch(e){}
-    if(!t){ t = (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) ? 'light' : 'dark'; }
-    document.documentElement.setAttribute('data-theme', t);
-  })();
-</script>
+<link rel="stylesheet" href="styles.css">
+<script src="theme-init.js"></script>
 </head>
 <body>
 
@@ -349,30 +50,32 @@
 
 <!-- ================= HERO ================= -->
 <section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <span class="eyebrow"><span class="pulse"></span>PhD Candidate · University of Rhode Island</span>
-      <h1>Hi, I'm Borano. I study how people <span class="grad-text">read</span>, and build tools that make it easier.</h1>
-      <p class="lede">Human-computer interaction researcher and full-stack engineer working at the intersection of typography, accessibility, and applied AI.</p>
-      <p class="sub">I use eye-tracking and pupillometry to understand reading across cognitively and linguistically diverse populations, then ship the software that makes that research possible.</p>
-      <div class="cta-row">
-        <a href="#publications" class="btn btn-primary">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          View Publications
-        </a>
-        <a href="mailto:borano.llana@uri.edu" class="btn btn-ghost">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-          Get in touch
-        </a>
-      </div>
+  <div class="wrap">
+    <div class="eyebrow-row">
+      <span class="eyebrow"><span class="pulse"></span>PhD Candidate · Computer Science · University of Rhode Island</span>
+      <span class="eyebrow eyebrow-loc">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Providence, Rhode Island, USA
+      </span>
     </div>
-    <div class="photo-wrap">
-      <!-- To add your headshot: drop a file named "headshot.jpg" in this folder. -->
-      <div class="photo" id="photo">
-        <img src="headshot.jpg" alt="Borano Llana" onerror="this.parentElement.classList.remove('has-img')">
-        <div class="ph-inner">
-          <div class="initials">BL</div>
-          <div class="hint">add headshot.jpg here</div>
+    <div class="hero-grid">
+      <div>
+        <h1>Hi, I'm <span class="grad-text">Borano</span>.</br> I study how people <span class="grad-text">read</span>, and build tools that make it easier.</h1>
+        <div class="hero-facts">
+          <a class="hf" href="https://web.uri.edu/iacr/" target="_blank" rel="noopener"><span class="hf-label">Working at</span><span class="hf-val">AI Lab, IACR · URI</span></a>
+          <a class="hf" href="#publications"><span class="hf-label">Research</span><span class="hf-val">10 publications</span></a>
+          <a class="hf" href="#projects"><span class="hf-label">Building</span><span class="hf-val">Votelayout &amp; ReadGen</span></a>
+          <a class="hf" href="#contact"><span class="hf-label">Contact</span><span class="hf-val">borano.llana@uri.edu</span></a>
+        </div>
+      </div>
+      <div class="photo-wrap">
+        <!-- To add your headshot: drop a file named "headshot.webp" in this folder. -->
+        <div class="photo" id="photo">
+          <img src="headshot.webp" alt="Borano Llana" onerror="this.parentElement.classList.remove('has-img')">
+          <div class="ph-inner">
+            <div class="initials">BL</div>
+            <div class="hint">add headshot.webp here</div>
+          </div>
         </div>
       </div>
     </div>
@@ -437,7 +140,7 @@
         <span class="stat-num" data-stat="h_index">&hellip;</span>
         <span class="stat-label">h-index</span>
       </a>
-      <a class="stat" href="https://scholar.google.com/citations?user=yTtXA48AAAAJ&hl=en" target="_blank" rel="noopener">
+      <a class="stat" style="display:none;" href="https://scholar.google.com/citations?user=yTtXA48AAAAJ&hl=en" target="_blank" rel="noopener">
         <span class="stat-num" data-stat="i10_index">&hellip;</span>
         <span class="stat-label">i10-index</span>
       </a>
@@ -694,6 +397,9 @@
         <a class="social" href="https://www.linkedin.com/in/boranollana/" target="_blank" rel="noopener" aria-label="LinkedIn">
           <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
         </a>
+        <a class="social" href="https://github.com/BoriLlana" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7 0-.7 0-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.4-1.3-5.4-5.9 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.7 5.6-5.4 5.9.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
+        </a>
         <a class="social" href="https://scholar.google.com/citations?user=yTtXA48AAAAJ&hl=en" target="_blank" rel="noopener" aria-label="Google Scholar">
           <svg viewBox="0 0 24 24"><path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.84 3.77A8 8 0 0 1 12 9a8 8 0 0 1 7.16 4.27L24 9.5z"/></svg>
         </a>
@@ -713,84 +419,6 @@
   </div>
 </footer>
 
-<script>
-  // year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // theme toggle
-  const themeToggle = document.getElementById('themeToggle');
-  themeToggle.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', next);
-    try { localStorage.setItem('theme', next); } catch (e) {}
-  });
-
-  // nav scrolled state
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 10));
-
-  // mobile menu
-  const toggle = document.getElementById('navToggle');
-  const links = document.getElementById('navLinks');
-  toggle.addEventListener('click', () => links.classList.toggle('open'));
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
-
-  // headshot presence
-  const photoImg = document.querySelector('#photo img');
-  if (photoImg.complete && photoImg.naturalWidth > 0) document.getElementById('photo').classList.add('has-img');
-  photoImg.addEventListener('load', () => { if (photoImg.naturalWidth > 0) document.getElementById('photo').classList.add('has-img'); });
-
-  // reveal on scroll
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, { threshold: 0.12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
-
-  // publication filters (status AND topic)
-  const pubs = document.querySelectorAll('.pub[data-cat]');
-  let curStatus = 'all', curTopic = 'all';
-
-  function applyFilters(){
-    pubs.forEach(p => {
-      const okStatus = curStatus === 'all' || p.dataset.cat === curStatus;
-      const topics = (p.dataset.topics || '').split(' ');
-      const okTopic = curTopic === 'all' || topics.includes(curTopic);
-      p.style.display = (okStatus && okTopic) ? 'flex' : 'none';
-    });
-  }
-
-  function wireGroup(selector, onPick){
-    const btns = document.querySelectorAll(selector + ' .chip-btn');
-    btns.forEach(btn => btn.addEventListener('click', () => {
-      btns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      onPick(btn);
-      applyFilters();
-    }));
-  }
-  wireGroup('#statusFilters', btn => { curStatus = btn.dataset.filter; });
-  wireGroup('#topicFilters',  btn => { curTopic  = btn.dataset.topic; });
-
-  // Google Scholar stats: read the JSON that the GitHub Action refreshes.
-  fetch('scholar-stats.json', { cache: 'no-store' })
-    .then(r => r.ok ? r.json() : Promise.reject())
-    .then(d => {
-      let hasData = false;
-      document.querySelectorAll('#scholarStats [data-stat]').forEach(el => {
-        const v = d[el.dataset.stat];
-        if (v !== null && v !== undefined) { el.textContent = Number(v).toLocaleString(); hasData = true; }
-      });
-      const upd = document.getElementById('statUpdated');
-      if (hasData && d.updated) {
-        upd.innerHTML = '<span class="live-dot"></span>Updated ' + d.updated + ' from Google Scholar';
-      } else if (!hasData) {
-        upd.innerHTML = '<span class="live-dot"></span>Syncing with Google Scholar…';
-      }
-    })
-    .catch(() => {
-      const upd = document.getElementById('statUpdated');
-      if (upd) upd.innerHTML = '<span class="live-dot"></span>Stats sync pending';
-    });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
